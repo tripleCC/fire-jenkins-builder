@@ -1,6 +1,6 @@
 # Fire::Jenkins::Builder
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/fire/jenkins/builder`. To experiment with that code, run `bin/console` for an interactive prompt.
+Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/fire/jenkins/builder`. To experiment with that code, run `jb` for an interactive prompt.
 
 TODO: Delete this and the text above, and describe your gem
 
@@ -22,13 +22,83 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+cli :
 
-## Development
+```sh
+jb -p PATH -b BRANCH -l LOG_LEVEL
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+添加如下配置文件至目标根目录下：
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```yml
+# jenkins job 配置文件
+# 可以通过在 commit 中添加 prefix ，使 CI 出发 jenkins job 的创建/构建行为
+# 提交 commit 信息
+# [jb] XXXXXX 执行 jenkins job ，如果不存在 job ，则会在对应 job_view 下创建并执行
+#
+########################
+#         选填
+########################
+# job 参数
+# 添加自己的钉钉消息等健值对
+# 需要注意的是，这里面的配置，模版必须已经存在了，这里只是修改对应的值
+parameters:
+  REPORTER_ACCESS_TOKEN: XXXXXX
+  DEBUG: true
+
+########################
+#         必填
+########################
+# 打包 job 名称 / 前缀名
+# 如果 job_name 为空，则采用 job_name_prefix + 分支名称
+# job_name: XXXX
+job_name_prefix: ZGiOS_
+# jenkins 上的分组，对应 view
+job_view: 掌柜iOS
+
+# jenkins 用户名密码
+username: qingmu
+password: xxx
+
+# 各业务线采用不同的模版，配置这里
+# 模版工程名称（需要唯一）
+template_job_name: ZGiOS_develop
+
+# 这里不动
+server_url: 'http://jenkins-shopkeeper-client.2dfire.net'
+server_port: 80
+```
+
+配置 `.gitlab-ci.yml` :
+
+```sh
+stages:
+...
+  - build
+...
+
+...
+jenkins_build:
+	before_script:
+	  - gem install jenkins_api_client
+	  - gem install nokogiri
+  stage: build
+  only:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /^\[jb\]/
+  script: 
+    - jb -p .fire-jenkins.yml -b $CI_COMMIT_REF_NAME
+  tags:
+    - iOSCI
+  allow_failure: true
+...
+```
+
+提交如下 commit 就会触发 jenkins 打包：
+
+```
+git commit -m "[jb] XXXXXX"
+```
 
 ## Contributing
 

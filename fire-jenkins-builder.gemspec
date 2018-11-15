@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{2dfire jenkins builder tool.}
   spec.description   = %q{2dfire jenkins builder tool.}
-  spec.homepage      = "."
+  spec.homepage      = "https://github.com/tripleCC/fire-jenkins-builder"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
@@ -21,6 +21,8 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "nokogiri"
+  spec.add_dependency "jenkins_api_client"
   spec.add_development_dependency "bundler", "~> 1.16"
   spec.add_development_dependency "rake", "~> 10.0"
 end
