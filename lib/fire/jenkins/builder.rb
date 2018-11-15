@@ -43,7 +43,7 @@ module Fire
 
 				def job_name
 					@job_name = begin
-						(config['job_name'] || (config['job_name_prefix'] + config.branch)).sub('/', '_')
+						(config['job_name'] || (config['job_name_prefix'] + config['branch'])).sub('/', '_')
 					end
 				end
 
@@ -73,7 +73,7 @@ module Fire
 
 					branch_spec_node = doc.search("//hudson.plugins.git.BranchSpec")
 					branch_node = branch_spec_node.children.find { |c| c.name == 'name' }
-					branch_node.content = config.branch
+					branch_node.content = config['branch']
 					doc.to_xml
 				end
 

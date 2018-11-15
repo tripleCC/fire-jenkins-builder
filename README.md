@@ -78,8 +78,7 @@ stages:
 ...
 jenkins_build:
 	before_script:
-		- gem install jenkins_api_client --no-ri --no-rdoc
-		- gem install nokogiri --no-ri --no-rdoc
+		- gem install fire-jenkins-builder -v 0.1.1 --no-ri --no-rdoc --conservative
   stage: build
   only:
     variables:
