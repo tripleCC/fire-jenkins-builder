@@ -1,8 +1,6 @@
 # Fire::Jenkins::Builder
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/fire/jenkins/builder`. To experiment with that code, run `jb` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+jenkins job 触发工具
 
 ## Installation
 
@@ -80,8 +78,8 @@ stages:
 ...
 jenkins_build:
 	before_script:
-	  - gem install jenkins_api_client
-	  - gem install nokogiri
+		- gem install jenkins_api_client --no-ri --no-rdoc
+		- gem install nokogiri --no-ri --no-rdoc
   stage: build
   only:
     variables:

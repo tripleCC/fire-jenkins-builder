@@ -1,8 +1,7 @@
 # jenkins job 配置文件
 # 可以通过在 commit 中添加 prefix ，使 CI 出发 jenkins job 的创建/构建行为
 # 提交 commit 信息
-# [jenkins create] XXXXXX   创建/更新并执行 jenkins job
-# [jenkins build] XXXXXX 执行 jenkins job
+# [jb] XXXXXX 执行 jenkins job ，如果不存在 job ，则会在对应 job_view 下创建并执行
 #
 ########################
 #         选填
