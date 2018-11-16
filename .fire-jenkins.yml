@@ -23,14 +23,17 @@ job_name_prefix: ZGiOS_
 # jenkins 上的分组，对应 view
 job_view: 掌柜iOS
 
+# branch 可以从 CI 变量中拿到，不需要设置
+# branch: feature/jenkins-executer
+
+# 下面配置可选
+# 如果没有设置，则采用模版值
+# remote_url: git@git.2dfire-inc.com:ios/restapp.git
+# credentials_id: xxx
+
 # jenkins 用户名密码
 username: qingmu
-password: 1
-
-
-branch: feature/jenkins-executer
-remote_url: git@git.2dfire-inc.com:ios/restapp.git
-# credentials_id: xxx
+password: xxxx
 
 # 各业务线采用不同的模版，配置这里
 # 模版工程名称（需要唯一）

@@ -54,6 +54,14 @@ job_name_prefix: ZGiOS_
 # jenkins 上的分组，对应 view
 job_view: 掌柜iOS
 
+# branch 可以从 CI 变量中拿到，不需要设置
+# branch: feature/jenkins-executer
+
+# 下面配置可选
+# 如果没有设置，则采用模版值
+# remote_url: git@git.2dfire-inc.com:ios/restapp.git
+# credentials_id: xxx
+
 # jenkins 用户名密码
 username: qingmu
 password: xxx
@@ -78,7 +86,7 @@ stages:
 ...
 jenkins_build:
 	before_script:
-		- gem install fire-jenkins-builder -v 0.1.1 --no-ri --no-rdoc --conservative
+		- gem install fire-jenkins-builder -v 0.1.3 --no-ri --no-rdoc --conservative
   stage: build
   only:
     variables:

@@ -32,15 +32,13 @@ module Fire
 				end
 
 				def build
-					puts target_xml
-
-					# jobs = client.job.list(job_name)
-					# if jobs.empty?
-					# 	create
-					# else
-					# 	job_name = client.job.chain(jobs, 'success', ['all'])[0]
-					# 	client.job.build(job_name, config['parameters'])
-					# end
+					jobs = client.job.list(job_name)
+					if jobs.empty?
+						create
+					else
+						job_name = client.job.chain(jobs, 'success', ['all'])[0]
+						client.job.build(job_name, config['parameters'])
+					end
 				end
 
 				def job_name
@@ -77,9 +75,11 @@ module Fire
 					branch_node = branch_spec_node.children.find { |c| c.name == 'name' }
 					branch_node.content = config['branch']
 
-					user_remote_config_node = doc.search("//hudson.plugins.git.UserRemoteConfig")
-					url_node = user_remote_config_node.children.find { |c| c.name == 'url' }
-					url_node.content = config['remote_url']
+					if config['remote_url']
+						user_remote_config_node = doc.search("//hudson.plugins.git.UserRemoteConfig")
+						url_node = user_remote_config_node.children.find { |c| c.name == 'url' }
+						url_node.content = config['remote_url']
+					end
 
 					if config['credentials_id']
 						credentials_id_node = user_remote_config_node.children.find { |c| c.name == 'credentialsId' }
