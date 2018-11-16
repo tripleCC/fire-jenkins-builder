@@ -11,7 +11,7 @@ module Fire
 				attr_reader :config
 				attr_reader :client
 
-				REQUIRED_KEYS = %w[server_url server_port username password template_job_name job_view branch].freeze
+				REQUIRED_KEYS = %w[server_url server_port username password template_job_name job_view branch remote_url].freeze
 
 				def initialize(config)
 					@client = JenkinsApi::Client.new(
@@ -32,13 +32,15 @@ module Fire
 				end
 
 				def build
-					jobs = client.job.list(job_name)
-					if jobs.empty?
-						create
-					else
-						job_name = client.job.chain(jobs, 'success', ['all'])[0]
-						client.job.build(job_name, config['parameters'])
-					end
+					puts target_xml
+
+					# jobs = client.job.list(job_name)
+					# if jobs.empty?
+					# 	create
+					# else
+					# 	job_name = client.job.chain(jobs, 'success', ['all'])[0]
+					# 	client.job.build(job_name, config['parameters'])
+					# end
 				end
 
 				def job_name
@@ -74,6 +76,16 @@ module Fire
 					branch_spec_node = doc.search("//hudson.plugins.git.BranchSpec")
 					branch_node = branch_spec_node.children.find { |c| c.name == 'name' }
 					branch_node.content = config['branch']
+
+					user_remote_config_node = doc.search("//hudson.plugins.git.UserRemoteConfig")
+					url_node = user_remote_config_node.children.find { |c| c.name == 'url' }
+					url_node.content = config['remote_url']
+
+					if config['credentials_id']
+						credentials_id_node = user_remote_config_node.children.find { |c| c.name == 'credentialsId' }
+						credentials_id_node.content = config['credentials_id']
+					end
+
 					doc.to_xml
 				end
 

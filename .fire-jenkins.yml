@@ -27,6 +27,11 @@ job_view: 掌柜iOS
 username: qingmu
 password: 1
 
+
+branch: feature/jenkins-executer
+remote_url: git@git.2dfire-inc.com:ios/restapp.git
+# credentials_id: xxx
+
 # 各业务线采用不同的模版，配置这里
 # 模版工程名称（需要唯一）
 template_job_name: ZGiOS_develop

@@ -15,28 +15,29 @@ OptionParser.new do |opts|
 	opts.banner = "jb is a tool to build jenkins job on gitlab CI."
 
 	opts.on('-p PATH', '--path PATH', 'config file path.') do |value|
-		options[:path] = value
+		options['path'] = value
 	end
-	
-	opts.on('-b BRANCH', '--branch BRANCH', 'jenkins branch sprcifier.') do |value|
-		options[:branch] = value
+
+	opts.on('-r REMOTE_URL', '--remote-url REMOTE_URL', 'remote url specifier.') do |value|
+		options['remote_url'] = value
+	end
+
+	opts.on('-b BRANCH', '--branch BRANCH', 'jenkins branch specifier.') do |value|
+		options['branch'] = value
 	end
 
 	opts.on('-l LOG_LEVEL', '--log_level LOGGER_LEVEL', 'log level of jb.') do |value|
-		options[:log_level] = value
+		options['log_level'] = value
 	end
 end.parse!
 
-config_path = options[:path]
+config_path = options['path']
 
-raise "必须指定配置文件路径，模版见 git homepage" if config_path.nil? || !File.exist?(config_path)
+raise "必须指定配置文件路径，模版见 README	" if config_path.nil? || !File.exist?(config_path)
 
 config = YAML.load_file(config_path)
 
-config.merge!({
-	'branch' => options[:branch],
-	'log_level' => options[:log_level]
-})
+config.merge!(options)
 
 builder = Fire::Jenkins::Builder::Base.new(config)
 builder.build
