@@ -26,7 +26,7 @@ cli :
 jb -p PATH -b BRANCH -l LOG_LEVEL
 ```
 
-添加如下配置文件至目标根目录下：
+添加 `.fire-jenkins.yml` 配置文件至目标根目录下：
 
 ```yml
 # jenkins job 配置文件
