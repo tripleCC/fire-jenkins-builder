@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fire-jenkins-builder (0.1.3)
+    fire-jenkins-builder (0.1.4)
       jenkins_api_client
       nokogiri
 

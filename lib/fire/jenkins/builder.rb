@@ -11,7 +11,7 @@ module Fire
 				attr_reader :config
 				attr_reader :client
 
-				REQUIRED_KEYS = %w[server_url server_port username password template_job_name job_view branch remote_url].freeze
+				REQUIRED_KEYS = %w[server_url server_port username password template_job_name job_view branch].freeze
 
 				def initialize(config)
 					@client = JenkinsApi::Client.new(
