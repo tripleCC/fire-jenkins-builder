@@ -85,8 +85,8 @@ stages:
 
 ...
 jenkins_build:
-	before_script:
-		- gem install fire-jenkins-builder -v 0.1.3 --no-ri --no-rdoc --conservative
+  before_script:
+    - gem install fire-jenkins-builder -v 0.1.4 --no-ri --no-rdoc --conservative
   stage: build
   only:
     variables:
