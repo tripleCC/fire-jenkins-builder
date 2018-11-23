@@ -92,7 +92,7 @@ jenkins_build:
     variables:
       - $CI_COMMIT_MESSAGE =~ /^\[jb\]/
   script: 
-    - jb -p .fire-jenkins.yml -b $CI_COMMIT_REF_NAME -r git@git.2dfire-inc.com:${CI_PROJECT_PATH}.git
+    - jb -p .fire-jenkins.yml -b $CI_COMMIT_REF_NAME -r git@git.2dfire.net:${CI_PROJECT_PATH}.git
   tags:
     - iOSCI
   allow_failure: true
