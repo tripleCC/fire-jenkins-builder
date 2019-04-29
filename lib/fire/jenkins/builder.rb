@@ -43,7 +43,8 @@ module Fire
 
 				def job_name
 					@job_name = begin
-						(config['job_name'] || (config['job_name_prefix'] + config['branch'])).sub('/', '_')
+						# config['job_name'] || 
+						((config['job_name_prefix'] + config['branch'])).sub('/', '_')
 					end
 				end
 
